@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   # delete '/logout', to: 'sessions#destroy'
   get '/logout', to:'sessions#destroy'
+  # post '/user-delete', to: 'users#destroy', as: :user_delete
   resources :users
   resources :account_activations, only: [:edit]
   # get 'sessions/new'

@@ -9,6 +9,8 @@ gem "faker",           "2.21.0"
 gem "will_paginate",           "3.3.1"
 gem "bootstrap-will_paginate", "1.0.0"
 gem "sassc-rails",     "2.1.2"
+gem 'jquery-rails'
+gem 'byebug'
 gem "sprockets-rails", "3.4.2"
 gem "importmap-rails", "1.1.0"
 gem "turbo-rails",     "1.1.1"

@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    puts "Deleted"
+    # byebug
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url, status: :see_other
