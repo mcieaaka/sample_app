@@ -1,0 +1,59 @@
+$ rails active_storage:install
+$ rails db:migrate
+
+app/models/microsoft.rb
+    has_one_attached :image
+
+edit _micropost_form.html.erb
+
+app/controllers/microposts_controller.rb
+    in def create:
+        @micropost.image.attach(params[:micropost][:image])
+
+    in def micropost_params:
+        params.require(:micropost).permit(:content, :image)
+
+edit _micropost.html.erb
+
+Image Validations:
+
+Gemfile:
+gem 'active_storage_validations', '0.8.2'
+bundle install
+
+in models/micropost.rb:
+
+ validates :image, content_type: { in: %w[image/jpeg image/gif image/png],message: "must be a valid image format" },
+                                    size: { less_than: 5.megabytes,message: "should be less than 5MB" }
+
+In _micropost_form
+    <script type="text/javascript">
+    $("#micropost_image").bind("change", function() {
+    const size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+    alert("Maximum file size is 5MB. Please choose a smaller file.");
+    $("#micropost_image").val("");
+    }
+    });
+    </script>
+
+    <%= f.file_field :image, accept:
+"image/jpeg,image/gif,image/png" %>
+
+Image Resizing:
+sudo apt-get -y install imagemagick
+
+Gemfile:
+gem 'image_processing', '1.9.3'
+gem 'mini_magick', '4.9.5'
+bundle install
+
+In micropost.rb
+    # Returns a resized image for display.
+    def display_image
+    image.variant(resize_to_limit: [500, 500])
+    end
+
+display_image!!!
+
+Production: AWS
